@@ -1,10 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My First Site</title>
+  <meta charset="UTF-8">
+  <title>My Personal Site</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      padding: 80px 20px;
+    }
+
+    h1 {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 20px;
+      color: #cbd5e1;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      margin: 30px auto;
+      padding: 25px;
+      border-radius: 20px;
+      max-width: 500px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: #22c55e;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>سلام! سایت من 👋</h1>
-  <p>این اولین سایت من است.</p>
+
+  <header>
+    <h1>سلام 👋</h1>
+    <p>به سایت شخصی من خوش آمدید</p>
+  </header>
+
+  <div class="card">
+    <h2>درباره من</h2>
+    <p>
+      من به ریاضی، تکنولوژی و ساخت سایت علاقه دارم 🚀
+    </p>
+    <div class="badge">🏅 چندین مدال ریاضی دارم</div>
+  </div>
+
+  <div class="card">
+    <h2>هدف من</h2>
+    <p>
+      یادگیری برنامه‌نویسی و ساخت پروژه‌های حرفه‌ای در وب 💻
+    </p>
+  </div>
+
+  <footer>
+    ساخته شده با GitHub Pages ⚡
+  </footer>
+
 </body>
 </html>
