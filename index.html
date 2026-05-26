@@ -3,27 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧠 TRANSHUMAN SYSTEM 🧠</title>
+<title>👑 GOD OF GODS MODE 👑</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 
 body{
-  background:#000;
+  background:black;
   color:#00ffcc;
   overflow:hidden;
 }
 
-/* BACKGROUND GRID */
-body::before{
-  content:"";
+/* MATRIX BACKGROUND */
+canvas{
   position:fixed;
-  width:100%;
-  height:100%;
-  background:
-    linear-gradient(rgba(0,255,204,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,204,0.05) 1px, transparent 1px);
-  background-size:40px 40px;
+  top:0;
+  left:0;
   z-index:-1;
 }
 
@@ -40,29 +35,29 @@ body::before{
 input{
   padding:10px;
   border:none;
-  outline:none;
   border-radius:10px;
+  outline:none;
 }
 
 button{
   padding:10px 20px;
   border:none;
-  border-radius:20px;
   background:#00ffcc;
   cursor:pointer;
+  border-radius:20px;
   transition:0.3s;
 }
 
 button:hover{transform:scale(1.1)}
 
-/* MAIN */
-#main{
+/* DASHBOARD */
+#dash{
   display:none;
   height:100vh;
 }
 
-/* TOP HUD */
-.hud{
+/* TOP BAR */
+.top{
   display:flex;
   justify-content:space-between;
   padding:10px;
@@ -70,119 +65,165 @@ button:hover{transform:scale(1.1)}
   backdrop-filter:blur(10px);
 }
 
-/* CHAT */
-.chat{
+/* TERMINAL */
+.terminal{
+  padding:20px;
   height:calc(100vh - 50px);
-  display:flex;
-  flex-direction:column;
+  overflow:auto;
+  font-size:14px;
+}
+
+input.cmd{
+  width:100%;
+  background:black;
+  color:#00ffcc;
+  border:none;
+  outline:none;
+  margin-top:10px;
+}
+
+/* BOXES */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:10px;
   padding:20px;
 }
 
-.box{
-  flex:1;
-  overflow:auto;
-  padding:10px;
+.card{
+  background:rgba(0,255,204,0.05);
   border:1px solid #00ffcc33;
+  padding:15px;
   border-radius:15px;
-}
-
-.msg{
-  margin:5px 0;
-}
-
-input.msgbox{
-  margin-top:10px;
-  padding:10px;
-  border:none;
-  outline:none;
-  border-radius:10px;
-  background:black;
-  color:#00ffcc;
-}
-
-/* AI glow */
-.glow{
-  text-shadow:0 0 10px #00ffcc;
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="matrix"></canvas>
+
 <!-- LOGIN -->
 <div id="login">
-  <h1 class="glow">🧠 TRANSHUMAN ACCESS</h1>
-  <input id="name" placeholder="Enter identity">
-  <button onclick="enter()">Enter System</button>
+  <h1>👑 GOD OF GODS</h1>
+  <input id="name" placeholder="Enter Identity">
+  <button onclick="enter()">ENTER SYSTEM</button>
 </div>
 
-<!-- MAIN -->
-<div id="main">
+<!-- DASHBOARD -->
+<div id="dash">
 
-<div class="hud">
+<div class="top">
   <div id="user">SYSTEM</div>
-  <div>AI CORE: ACTIVE</div>
+  <div>
+    <button onclick="logout()">EXIT</button>
+  </div>
 </div>
 
-<div class="chat">
-  <div class="box" id="box">
-    <div class="msg">AI: سلام 👋 من سیستم هوشمند تو هستم</div>
-    <div class="msg">AI: با من حرف بزن یا بنویس help</div>
-  </div>
+<div class="grid">
+  <div class="card">⚡ POWER: MAX</div>
+  <div class="card">🧠 AI CORE: ACTIVE</div>
+  <div class="card">🔥 MODE: GOD</div>
+</div>
 
-  <input class="msgbox" id="input" onkeydown="send(event)" placeholder="type message...">
+<div class="terminal" id="terminal">
+> system booting...<br>
+> welcome operator<br><br>
+
+type: help
+<br><br>
+
+<input class="cmd" id="cmd" onkeydown="run(event)">
 </div>
 
 </div>
 
 <script>
 
-let user="";
+/* MATRIX */
+const c = document.getElementById("matrix");
+const ctx = c.getContext("2d");
+
+c.height = window.innerHeight;
+c.width = window.innerWidth;
+
+let letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+letters = letters.split("");
+
+let fontSize = 14;
+let columns = c.width/fontSize;
+
+let drops = [];
+
+for(let x=0;x<columns;x++)
+drops[x]=1;
+
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,c.width,c.height);
+
+  ctx.fillStyle="#00ffcc";
+  ctx.font=fontSize+"px monospace";
+
+  for(let i=0;i<drops.length;i++){
+    let text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+    if(drops[i]*fontSize > c.height && Math.random()>0.975)
+      drops[i]=0;
+
+    drops[i]++;
+  }
+}
+setInterval(draw,33);
 
 /* LOGIN */
 function enter(){
-  user=document.getElementById("name").value;
-  if(!user) return;
+  let name=document.getElementById("name").value;
+  if(!name) return;
 
-  localStorage.setItem("user",user);
+  localStorage.setItem("user",name);
 
   document.getElementById("login").style.display="none";
-  document.getElementById("main").style.display="block";
+  document.getElementById("dash").style.display="block";
 
-  document.getElementById("user").innerText="🧠 "+user;
+  document.getElementById("user").innerText="👑 "+name;
 }
 
-/* AI BRAIN (SIMPLE) */
-function aiReply(text){
-  text=text.toLowerCase();
-
-  if(text.includes("سلام")) return "سلام "+user+" 👋";
-  if(text.includes("خوبی")) return "من یک سیستم هستم، اما در حال پردازشم 🤖";
-  if(text.includes("اسم")) return "اسم من Transhuman AI است 🧠";
-  if(text.includes("help")) return "دستورات: سلام / خوبی / اسم / درباره";
-  if(text.includes("درباره")) return "من یک هوش مصنوعی داخل مرورگر هستم 🌐";
-  
-  return "متوجه نشدم... اما دارم یاد میگیرم 🧠";
+function logout(){
+  localStorage.removeItem("user");
+  location.reload();
 }
 
-/* CHAT */
-function send(e){
+/* TERMINAL */
+function run(e){
   if(e.key==="Enter"){
-    let input=document.getElementById("input");
-    let box=document.getElementById("box");
+    let cmd=document.getElementById("cmd").value;
+    let t=document.getElementById("terminal");
 
-    let text=input.value;
-    if(!text) return;
+    let out = "";
 
-    box.innerHTML += "<div class='msg'>You: "+text+"</div>";
+    if(cmd==="help"){
+      out="commands: help / status / clear / hack";
+    }
+    else if(cmd==="status"){
+      out="SYSTEM: ONLINE | GOD MODE ACTIVE";
+    }
+    else if(cmd==="hack"){
+      out=">>> ACCESSING MAINFRAME... DONE 😈";
+    }
+    else if(cmd==="clear"){
+      t.innerHTML="> cleared<br><input class='cmd' id='cmd' onkeydown='run(event)'>";
+      return;
+    }
+    else{
+      out="unknown command";
+    }
 
-    let reply=aiReply(text);
-    setTimeout(()=>{
-      box.innerHTML += "<div class='msg'>AI: "+reply+"</div>";
-      box.scrollTop=box.scrollHeight;
-    },400);
+    t.innerHTML += "<br>> "+cmd+"<br>"+out+"<br>";
+    t.scrollTop=t.scrollHeight;
 
-    input.value="";
+    document.getElementById("cmd").value="";
   }
 }
 
@@ -190,10 +231,9 @@ function send(e){
 window.onload=()=>{
   let u=localStorage.getItem("user");
   if(u){
-    user=u;
     document.getElementById("login").style.display="none";
-    document.getElementById("main").style.display="block";
-    document.getElementById("user").innerText="🧠 "+u;
+    document.getElementById("dash").style.display="block";
+    document.getElementById("user").innerText="👑 "+u;
   }
 }
 
