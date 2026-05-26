@@ -1,12 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BARDIYA | FUTURE</title>
+<title>BARDIYA GOD MODE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Vazirmatn:wght@300;500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
 
@@ -20,54 +23,71 @@ scroll-behavior:smooth;
 body{
 font-family:'Vazirmatn',sans-serif;
 background:black;
-color:white;
 overflow-x:hidden;
+color:white;
 cursor:none;
 }
 
-/* ===== MATRIX ===== */
+/* ===== 3D BACKGROUND ===== */
 
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-5;
-}
-
-/* ===== VIDEO ===== */
-
-video{
+#bg{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-object-fit:cover;
-opacity:0.18;
-z-index:-4;
+z-index:-10;
 }
 
-/* ===== GLOW ===== */
+/* ===== LOADING ===== */
 
-.glow{
+#loader{
 position:fixed;
-width:500px;
-height:500px;
-background:#00ffff33;
-filter:blur(120px);
-border-radius:50%;
-top:-100px;
-left:-100px;
-z-index:-3;
-animation:moveGlow 8s infinite alternate ease-in-out;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999999;
 }
 
-@keyframes moveGlow{
-from{
-transform:translate(0,0);
+.loader-text{
+font-size:40px;
+font-family:'Orbitron',sans-serif;
+color:#00ffff;
+text-shadow:
+0 0 20px cyan,
+0 0 50px cyan;
+animation:pulse 1.5s infinite;
 }
+
+.loading-bar{
+margin-top:30px;
+width:300px;
+height:10px;
+background:#111;
+border-radius:20px;
+overflow:hidden;
+}
+
+.loading-fill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#00ffff,#0044ff);
+animation:load 4s forwards;
+}
+
+@keyframes load{
 to{
-transform:translate(400px,250px);
+width:100%;
+}
+}
+
+@keyframes pulse{
+50%{
+transform:scale(1.1);
 }
 }
 
@@ -77,51 +97,60 @@ transform:translate(400px,250px);
 width:25px;
 height:25px;
 border:2px solid cyan;
-border-radius:50%;
 position:fixed;
+border-radius:50%;
 pointer-events:none;
 transform:translate(-50%,-50%);
-z-index:9999;
-box-shadow:0 0 20px cyan;
+z-index:999999;
+box-shadow:0 0 30px cyan;
 }
 
-/* ===== NAVBAR ===== */
+/* ===== NAV ===== */
 
 nav{
 position:fixed;
 top:0;
 width:100%;
+padding:25px 60px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px 50px;
+backdrop-filter:blur(12px);
 background:rgba(0,0,0,0.3);
-backdrop-filter:blur(10px);
-z-index:1000;
+z-index:10000;
 }
 
 .logo{
-font-size:35px;
+font-size:38px;
 font-family:'Orbitron',sans-serif;
 font-weight:900;
 color:#00ffff;
 text-shadow:
-0 0 10px cyan,
-0 0 30px cyan,
+0 0 20px cyan,
 0 0 60px cyan;
+animation:logoAnim 3s infinite alternate;
+}
+
+@keyframes logoAnim{
+from{
+transform:rotate(-2deg);
+}
+to{
+transform:rotate(2deg) scale(1.05);
+}
 }
 
 nav ul{
 display:flex;
-gap:30px;
+gap:35px;
 list-style:none;
 }
 
 nav a{
 text-decoration:none;
 color:white;
-transition:0.3s;
 font-size:18px;
+transition:0.3s;
 }
 
 nav a:hover{
@@ -142,30 +171,31 @@ padding:20px;
 }
 
 .hero h1{
-font-size:90px;
+font-size:110px;
 font-family:'Orbitron',sans-serif;
-margin-bottom:20px;
 color:#00ffff;
 text-shadow:
-0 0 10px cyan,
-0 0 30px cyan,
+0 0 20px cyan,
 0 0 60px cyan,
 0 0 120px cyan;
-animation:pulse 2s infinite;
+animation:holo 3s infinite alternate;
 }
 
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.05);}
-100%{transform:scale(1);}
+@keyframes holo{
+from{
+transform:translateY(-10px);
+}
+to{
+transform:translateY(10px);
+}
 }
 
 .typing{
-font-size:28px;
-color:white;
+margin-top:20px;
+font-size:30px;
+overflow:hidden;
 border-right:3px solid cyan;
 white-space:nowrap;
-overflow:hidden;
 width:0;
 animation:
 typing 4s steps(40,end) forwards,
@@ -181,68 +211,79 @@ to{width:100%}
 50%{border-color:transparent;}
 }
 
+.clock{
+margin-top:30px;
+font-size:35px;
+font-family:'Orbitron',sans-serif;
+color:#00ffff;
+text-shadow:0 0 20px cyan;
+}
+
 .btn{
-margin-top:40px;
-padding:18px 50px;
+margin-top:50px;
+padding:18px 55px;
 border:none;
-border-radius:50px;
-background:linear-gradient(45deg,#00ffff,#0044ff);
-color:white;
+border-radius:60px;
 font-size:22px;
+background:linear-gradient(45deg,#00ffff,#0033ff);
+color:white;
 cursor:pointer;
-transition:0.4s;
-box-shadow:0 0 30px cyan;
+transition:0.5s;
+box-shadow:0 0 40px cyan;
 }
 
 .btn:hover{
-transform:scale(1.1);
-box-shadow:0 0 60px cyan;
+transform:scale(1.15);
+box-shadow:0 0 80px cyan;
 }
 
 /* ===== SECTIONS ===== */
 
 .section{
-padding:120px 30px;
+padding:120px 40px;
 }
 
 .title{
 text-align:center;
-font-size:55px;
-margin-bottom:70px;
+font-size:60px;
+margin-bottom:80px;
+font-family:'Orbitron',sans-serif;
 color:#00ffff;
-text-shadow:0 0 20px cyan;
+text-shadow:0 0 30px cyan;
 }
 
 /* ===== CARDS ===== */
 
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
+grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+gap:35px;
 }
 
 .card{
-background:rgba(255,255,255,0.07);
+background:rgba(255,255,255,0.06);
 border:1px solid rgba(255,255,255,0.1);
-backdrop-filter:blur(12px);
-padding:40px;
-border-radius:25px;
+backdrop-filter:blur(15px);
+padding:45px;
+border-radius:30px;
 transition:0.5s;
 transform-style:preserve-3d;
 }
 
 .card:hover{
 transform:
-rotateY(10deg)
-rotateX(10deg)
-translateY(-15px);
-box-shadow:0 0 40px #00ffff88;
+rotateY(12deg)
+rotateX(12deg)
+translateY(-20px)
+scale(1.05);
+
+box-shadow:0 0 50px #00ffff88;
 }
 
 .card h3{
+font-size:30px;
 margin-bottom:20px;
 color:#00ffff;
-font-size:28px;
 }
 
 .card p{
@@ -257,13 +298,13 @@ margin-bottom:35px;
 }
 
 .skill-name{
-margin-bottom:10px;
-font-size:20px;
+margin-bottom:12px;
+font-size:22px;
 }
 
 .bar{
 width:100%;
-height:22px;
+height:24px;
 background:#111;
 border-radius:30px;
 overflow:hidden;
@@ -271,23 +312,15 @@ overflow:hidden;
 
 .fill{
 height:100%;
-background:linear-gradient(90deg,#00ffff,#0055ff);
 border-radius:30px;
-animation:fillAnim 2s;
+background:linear-gradient(90deg,#00ffff,#0033ff);
+animation:fillAnim 3s;
 }
 
 @keyframes fillAnim{
-from{width:0;}
+from{
+width:0;
 }
-
-/* ===== CLOCK ===== */
-
-.clock{
-margin-top:30px;
-font-size:35px;
-font-family:'Orbitron',sans-serif;
-color:#00ffff;
-text-shadow:0 0 20px cyan;
 }
 
 /* ===== FOOTER ===== */
@@ -296,7 +329,7 @@ footer{
 padding:40px;
 text-align:center;
 background:#050505;
-color:#888;
+color:#777;
 }
 
 /* ===== MOBILE ===== */
@@ -304,7 +337,7 @@ color:#888;
 @media(max-width:768px){
 
 .hero h1{
-font-size:50px;
+font-size:55px;
 }
 
 .typing{
@@ -326,29 +359,39 @@ display:none;
 
 <body>
 
-<!-- MATRIX -->
+<!-- LOADER -->
 
-<canvas id="matrix"></canvas>
+<div id="loader">
 
-<!-- VIDEO -->
+<div class="loader-text">
+INITIALIZING SYSTEM
+</div>
 
-<video autoplay muted loop>
-<source src="https://cdn.coverr.co/videos/coverr-earth-from-space-1560083675572?download=1080p" type="video/mp4">
-</video>
+<div class="loading-bar">
+<div class="loading-fill"></div>
+</div>
 
-<div class="glow"></div>
+</div>
+
+<!-- CURSOR -->
 
 <div class="cursor" id="cursor"></div>
 
-<!-- NAVBAR -->
+<!-- 3D BACKGROUND -->
+
+<canvas id="bg"></canvas>
+
+<!-- NAV -->
 
 <nav>
 
-<div class="logo">BARDIYA</div>
+<div class="logo">
+BARDIYA
+</div>
 
 <ul>
 <li><a href="#">خانه</a></li>
-<li><a href="#about">درباره من</a></li>
+<li><a href="#about">درباره</a></li>
 <li><a href="#skills">مهارت‌ها</a></li>
 <li><a href="#projects">پروژه‌ها</a></li>
 </ul>
@@ -362,13 +405,13 @@ display:none;
 <h1>BARDIYA</h1>
 
 <div class="typing">
-WELCOME TO THE FUTURE 🚀
+WELCOME TO GOD MODE 👑
 </div>
 
 <div class="clock" id="clock"></div>
 
 <button class="btn" onclick="playSound()">
-ENTER THE SYSTEM
+ENTER THE FUTURE
 </button>
 
 </section>
@@ -377,28 +420,30 @@ ENTER THE SYSTEM
 
 <section class="section" id="about">
 
-<h2 class="title">درباره من</h2>
+<h2 class="title">
+ABOUT ME
+</h2>
 
 <div class="cards">
 
 <div class="card">
-<h3>💻 برنامه‌نویسی</h3>
+<h3>💻 PROGRAMMING</h3>
 <p>
-طراحی سایت‌های حرفه‌ای و آینده‌نگر
+ساخت سایت‌های حرفه‌ای و آینده‌نگر
 </p>
 </div>
 
 <div class="card">
-<h3>⚽ فوتبال</h3>
+<h3>⚽ FOOTBALL</h3>
 <p>
-طرفدار بارسلونا، لیورپول و ستاره‌های بزرگ فوتبال
+طرفدار فوتبال و ستاره‌های بزرگ جهان
 </p>
 </div>
 
 <div class="card">
-<h3>🎸 موسیقی</h3>
+<h3>🎸 MUSIC</h3>
 <p>
-نوازنده گیتار کلاسیک و علاقه‌مند به راک
+نوازنده گیتار کلاسیک و عاشق راک
 </p>
 </div>
 
@@ -410,7 +455,9 @@ ENTER THE SYSTEM
 
 <section class="section" id="skills">
 
-<h2 class="title">مهارت‌ها</h2>
+<h2 class="title">
+SKILLS
+</h2>
 
 <div class="skill">
 <div class="skill-name">HTML & CSS</div>
@@ -422,21 +469,21 @@ ENTER THE SYSTEM
 <div class="skill">
 <div class="skill-name">Math</div>
 <div class="bar">
-<div class="fill" style="width:98%"></div>
-</div>
-</div>
-
-<div class="skill">
-<div class="skill-name">Football</div>
-<div class="bar">
-<div class="fill" style="width:90%"></div>
+<div class="fill" style="width:99%"></div>
 </div>
 </div>
 
 <div class="skill">
 <div class="skill-name">Music</div>
 <div class="bar">
-<div class="fill" style="width:85%"></div>
+<div class="fill" style="width:90%"></div>
+</div>
+</div>
+
+<div class="skill">
+<div class="skill-name">Football</div>
+<div class="bar">
+<div class="fill" style="width:93%"></div>
 </div>
 </div>
 
@@ -446,28 +493,30 @@ ENTER THE SYSTEM
 
 <section class="section" id="projects">
 
-<h2 class="title">پروژه‌ها</h2>
+<h2 class="title">
+PROJECTS
+</h2>
 
 <div class="cards">
 
 <div class="card">
-<h3>🌌 Future Website</h3>
+<h3>🚀 SPACE WEBSITE</h3>
 <p>
-طراحی سایت فضایی و سایبرپانکی
+طراحی سایت فضایی سه‌بعدی
 </p>
 </div>
 
 <div class="card">
-<h3>🤖 AI Projects</h3>
+<h3>🤖 AI SYSTEM</h3>
 <p>
 پروژه‌های مرتبط با هوش مصنوعی
 </p>
 </div>
 
 <div class="card">
-<h3>🚀 Space Design</h3>
+<h3>🌌 CYBER WORLD</h3>
 <p>
-طراحی‌های الهام گرفته از فضا
+طراحی رابط کاربری آینده‌نگر
 </p>
 </div>
 
@@ -487,18 +536,26 @@ ENTER THE SYSTEM
 
 <script>
 
+/* LOADER */
+
+setTimeout(()=>{
+
+document.getElementById("loader").style.display="none";
+
+},4000);
+
 /* CLOCK */
 
 function updateClock(){
 
-let now = new Date();
+let now=new Date();
 
-let h = String(now.getHours()).padStart(2,'0');
-let m = String(now.getMinutes()).padStart(2,'0');
-let s = String(now.getSeconds()).padStart(2,'0');
+let h=String(now.getHours()).padStart(2,'0');
+let m=String(now.getMinutes()).padStart(2,'0');
+let s=String(now.getSeconds()).padStart(2,'0');
 
-document.getElementById("clock").innerHTML =
-h + ":" + m + ":" + s;
+document.getElementById("clock").innerHTML=
+h+":"+m+":"+s;
 
 }
 
@@ -509,7 +566,9 @@ updateClock();
 /* SOUND */
 
 function playSound(){
+
 document.getElementById("sound").play();
+
 }
 
 /* CURSOR */
@@ -523,52 +582,83 @@ cursor.style.top=e.clientY+"px";
 
 });
 
-/* MATRIX */
+/* ===== THREE JS ===== */
 
-const canvas=document.getElementById("matrix");
-const ctx=canvas.getContext("2d");
+const scene = new THREE.Scene();
 
-canvas.height=window.innerHeight;
-canvas.width=window.innerWidth;
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
 
-const letters="01アカサタナハマヤャラワ0123456789";
-const array=letters.split("");
+const renderer = new THREE.WebGLRenderer({
+canvas:document.getElementById('bg'),
+alpha:true
+});
 
-const fontSize=16;
+renderer.setSize(window.innerWidth,window.innerHeight);
 
-const columns=canvas.width/fontSize;
+camera.position.z=5;
 
-const drops=[];
+/* STARS */
 
-for(let i=0;i<columns;i++){
-drops[i]=1;
-}
+const starsGeometry = new THREE.BufferGeometry();
 
-function draw(){
+const starsCount = 5000;
 
-ctx.fillStyle="rgba(0,0,0,0.05)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
+const posArray = new Float32Array(starsCount * 3);
 
-ctx.fillStyle="#00ffff";
-ctx.font=fontSize+"px monospace";
+for(let i=0;i<starsCount*3;i++){
 
-for(let i=0;i<drops.length;i++){
-
-const text=array[Math.floor(Math.random()*array.length)];
-
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-
-if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
-drops[i]=0;
-}
-
-drops[i]++;
+posArray[i]=(Math.random()-0.5)*2000;
 
 }
 
+starsGeometry.setAttribute(
+'position',
+new THREE.BufferAttribute(posArray,3)
+);
+
+const starsMaterial = new THREE.PointsMaterial({
+size:0.7,
+color:0x00ffff
+});
+
+const starsMesh = new THREE.Points(
+starsGeometry,
+starsMaterial
+);
+
+scene.add(starsMesh);
+
+/* ANIMATION */
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+starsMesh.rotation.y +=0.0008;
+starsMesh.rotation.x +=0.0003;
+
+renderer.render(scene,camera);
+
 }
 
-setInterval(draw,35);
+animate();
+
+/* RESIZE */
+
+window.addEventListener('resize',()=>{
+
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+camera.aspect=window.innerWidth/window.innerHeight;
+
+camera.updateProjectionMatrix();
+
+});
 
 </script>
 
