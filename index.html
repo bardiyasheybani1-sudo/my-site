@@ -1,190 +1,406 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
-<meta charset="UTF-8">
-<title>My Cool Site</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Bardiya Sheybani</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Vazirmatn:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: white;
-  text-align: center;
-  overflow: hidden;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* 🌌 پس‌زمینه متحرک */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, #0f172a, #1e3a8a, #9333ea, #06b6d4);
-  background-size: 400% 400%;
-  animation: bgMove 12s ease infinite;
-  z-index: -3;
+body{
+    font-family:'Vazirmatn',sans-serif;
+    background:black;
+    color:white;
+    overflow-x:hidden;
 }
 
-@keyframes bgMove {
-  0% { transform: translate(0,0); }
-  50% { transform: translate(-25%, -25%); }
-  100% { transform: translate(0,0); }
+/* ===== BACKGROUND ===== */
+
+.stars{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:url('https://i.ibb.co/7QpKsCX/stars.png');
+    animation:moveStars 200s linear infinite;
+    z-index:-3;
 }
 
-/* ⭐ اسم با افکت نور */
-.typewriter {
-  font-size: 42px;
-  margin-top: 40px;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid white;
-  width: 0;
-  animation: typing 3s steps(30,end) forwards, blink 0.7s infinite;
-  text-shadow: 0 0 10px #fff, 0 0 20px #3b82f6;
+@keyframes moveStars{
+    from{background-position:0 0;}
+    to{background-position:10000px 5000px;}
 }
 
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+.glow{
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#00ffff55;
+    filter:blur(120px);
+    border-radius:50%;
+    top:-100px;
+    left:-100px;
+    z-index:-2;
+    animation:float 8s ease-in-out infinite alternate;
 }
 
-@keyframes blink {
-  50% { border-color: transparent; }
+@keyframes float{
+    from{
+        transform:translate(0,0);
+    }
+    to{
+        transform:translate(300px,200px);
+    }
 }
 
-p {
-  font-size: 20px;
-  opacity: 0.9;
+/* ===== NAVBAR ===== */
+
+nav{
+    position:fixed;
+    width:100%;
+    top:0;
+    left:0;
+    padding:20px;
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.3);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:1000;
 }
 
-/* 💎 کارت حرفه‌ای */
-.card {
-  margin-top: 30px;
-  background: rgba(255,255,255,0.08);
-  padding: 25px;
-  border-radius: 20px;
-  display: inline-block;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 25px rgba(0,0,0,0.3);
+.logo{
+    font-size:28px;
+    color:#00ffff;
+    font-family:'Orbitron',sans-serif;
+    text-shadow:0 0 20px cyan;
 }
 
-.medals {
-  margin-top: 10px;
-  font-size: 18px;
-  line-height: 1.9;
+nav ul{
+    display:flex;
+    gap:20px;
+    list-style:none;
 }
 
-/* ⭐ ستاره‌های واقعی‌تر */
-.stars {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -2;
+nav a{
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
 }
 
-.star {
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-  animation: floatStar linear infinite, twinkle 2s infinite;
+nav a:hover{
+    color:#00ffff;
+    text-shadow:0 0 10px cyan;
 }
 
-@keyframes floatStar {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-10vh); }
+/* ===== HERO ===== */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:20px;
 }
 
-@keyframes twinkle {
-  0%,100% { opacity: 0.3; }
-  50% { opacity: 1; }
+.hero h1{
+    font-size:70px;
+    color:#00ffff;
+    text-shadow:
+    0 0 10px cyan,
+    0 0 30px cyan,
+    0 0 60px cyan;
+    margin-bottom:20px;
 }
 
-/* 🎵 دکمه موزیک شیک */
-#musicBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 12px 18px;
-  border-radius: 15px;
-  border: none;
-  background: linear-gradient(45deg, #1e3a8a, #9333ea);
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(255,255,255,0.2);
+.hero p{
+    max-width:700px;
+    line-height:2;
+    color:#ddd;
+    font-size:20px;
 }
+
+.btn{
+    margin-top:40px;
+    padding:15px 40px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(45deg,#00ffff,#0066ff);
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+    transition:0.4s;
+    box-shadow:0 0 20px cyan;
+}
+
+.btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 40px cyan;
+}
+
+/* ===== CARDS ===== */
+
+.section{
+    padding:100px 20px;
+}
+
+.title{
+    text-align:center;
+    font-size:45px;
+    margin-bottom:60px;
+    color:#00ffff;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(15px);
+    padding:40px;
+    border-radius:25px;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0 0 30px #00ffff66;
+}
+
+.card h3{
+    margin-bottom:20px;
+    color:#00ffff;
+}
+
+/* ===== SKILLS ===== */
+
+.skill{
+    margin-bottom:30px;
+}
+
+.skill-name{
+    margin-bottom:10px;
+}
+
+.bar{
+    width:100%;
+    height:20px;
+    background:#222;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    background:linear-gradient(90deg,#00ffff,#0066ff);
+    border-radius:20px;
+}
+
+/* ===== FOOTER ===== */
+
+footer{
+    text-align:center;
+    padding:40px;
+    background:#050505;
+    color:#777;
+}
+
+/* ===== CLOCK ===== */
+
+.clock{
+    margin-top:20px;
+    font-size:30px;
+    color:#00ffff;
+    font-family:'Orbitron',sans-serif;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:45px;
+}
+
+nav ul{
+    display:none;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="stars"></div>
+<div class="glow"></div>
 
-<audio id="bgmusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+<!-- NAVBAR -->
 
-<button id="musicBtn" onclick="toggleMusic()">▶ Play Music</button>
+<nav>
+    <div class="logo">BARDIYA</div>
 
-<h1 class="typewriter">سلام، من بردیا شیبانی هستم 👋</h1>
-<p>به سایت شخصی من خوش آمدید 🚀</p>
+    <ul>
+        <li><a href="#">خانه</a></li>
+        <li><a href="#about">درباره من</a></li>
+        <li><a href="#skills">مهارت‌ها</a></li>
+        <li><a href="#contact">ارتباط</a></li>
+    </ul>
+</nav>
 
-<div class="card">
-<h2>🏅 مدال‌ها و افتخارات</h2>
-<div class="medals">
-🥇 شاگرد اول در درس‌ها<br>
-🧠 ریاضی قوی<br>
-🌍 زبان انگلیسی خوب<br>
-⚽ علاقه‌مند به فوتبال<br>
-🎸 گیتار کلاسیک (۴ سال)<br>
-🏆 المپیاد آسیایی
-</div>
-</div>
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>بردیا شیبانی</h1>
+
+    <p>
+        Welcome To My Futuristic Website 🚀
+        <br>
+        عاشق تکنولوژی، فوتبال، فضا، ریاضی و طراحی سایت
+    </p>
+
+    <div class="clock" id="clock"></div>
+
+    <button class="btn">
+        ENTER THE FUTURE
+    </button>
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="section" id="about">
+
+    <h2 class="title">درباره من</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>💻 برنامه‌نویسی</h3>
+            <p>
+                ساخت سایت‌های حرفه‌ای و طراحی صفحات خفن
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>⚽ فوتبال</h3>
+            <p>
+                طرفدار بارسلونا، لیورپول و بازیکنان بزرگ دنیا
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🎸 موسیقی</h3>
+            <p>
+                نوازنده گیتار کلاسیک با علاقه به سبک راک
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- SKILLS -->
+
+<section class="section" id="skills">
+
+    <h2 class="title">مهارت‌ها</h2>
+
+    <div class="skill">
+        <div class="skill-name">HTML & CSS</div>
+        <div class="bar">
+            <div class="fill" style="width:95%"></div>
+        </div>
+    </div>
+
+    <div class="skill">
+        <div class="skill-name">Math</div>
+        <div class="bar">
+            <div class="fill" style="width:98%"></div>
+        </div>
+    </div>
+
+    <div class="skill">
+        <div class="skill-name">Football</div>
+        <div class="bar">
+            <div class="fill" style="width:90%"></div>
+        </div>
+    </div>
+
+    <div class="skill">
+        <div class="skill-name">Music</div>
+        <div class="bar">
+            <div class="fill" style="width:85%"></div>
+        </div>
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section class="section" id="contact">
+
+    <h2 class="title">ارتباط با من</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🌐 GitHub</h3>
+            <p>github.com</p>
+        </div>
+
+        <div class="card">
+            <h3>📧 Email</h3>
+            <p>your@email.com</p>
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Bardiya Sheybani | All Rights Reserved
+</footer>
 
 <script>
-/* ⭐ ستاره‌های بیشتر و حرفه‌ای‌تر */
-function createStars(){
-  const stars = document.querySelector(".stars");
 
-  for(let i=0;i<120;i++){
-    let s = document.createElement("div");
-    s.className = "star";
+/* CLOCK */
 
-    s.style.left = Math.random()*100+"vw";
-    s.style.top = Math.random()*100+"vh";
+function updateClock(){
 
-    let size = Math.random()*3;
-    s.style.width = size+"px";
-    s.style.height = size+"px";
+    let now = new Date();
 
-    s.style.animationDuration = (3+Math.random()*8)+"s";
+    let h = String(now.getHours()).padStart(2,'0');
+    let m = String(now.getMinutes()).padStart(2,'0');
+    let s = String(now.getSeconds()).padStart(2,'0');
 
-    stars.appendChild(s);
-  }
+    document.getElementById("clock").innerHTML =
+    h + ":" + m + ":" + s;
 }
-createStars();
 
-/* 🎵 موزیک */
-let isPlaying=false;
-const music=document.getElementById("bgmusic");
-const btn=document.getElementById("musicBtn");
+setInterval(updateClock,1000);
 
-function toggleMusic(){
-  if(isPlaying){
-    music.pause();
-    btn.innerHTML="▶ Play Music";
-  }else{
-    music.play();
-    btn.innerHTML="⏸ Pause Music";
-  }
-  isPlaying=!isPlaying;
-}
+updateClock();
+
 </script>
 
 </body>
-</html>
+          </html>
