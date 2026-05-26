@@ -3,146 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌐 METAVERSE CORE</title>
+<title>🌌 NEURAL REALITY SYSTEM</title>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+
 body{
-  margin:0;
-  overflow:hidden;
   background:black;
-  font-family:Arial;
+  color:#00ffcc;
+  overflow:hidden;
 }
 
-#ui{
+/* ENERGY FIELD */
+body::before{
+  content:"";
   position:fixed;
-  top:10px;
-  left:10px;
-  color:#00ffcc;
-  z-index:10;
+  width:100%;
+  height:100%;
+  background: radial-gradient(circle, rgba(0,255,204,0.08), transparent 60%);
+  animation:pulse 6s infinite alternate;
+  z-index:-1;
+}
+
+@keyframes pulse{
+  from{transform:scale(1)}
+  to{transform:scale(1.2)}
+}
+
+/* LOGIN */
+#login{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+}
+
+input{
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  outline:none;
 }
 
 button{
-  padding:10px;
-  margin:5px;
+  padding:10px 20px;
   border:none;
-  border-radius:10px;
-  cursor:pointer;
+  border-radius:20px;
   background:#00ffcc;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-#panel{
-  position:fixed;
-  bottom:10px;
-  left:10px;
-  color:white;
-  z-index:10;
-  background:rgba(0,0,0,0.5);
+button:hover{transform:scale(1.1)}
+
+/* SYSTEM */
+#system{
+  display:none;
+  height:100vh;
+}
+
+/* TOP HUD */
+.hud{
+  display:flex;
+  justify-content:space-between;
   padding:10px;
+  background:rgba(0,255,204,0.1);
+  backdrop-filter:blur(10px);
+}
+
+/* CORE */
+.core{
+  height:calc(100vh - 50px);
+  display:flex;
+  flex-direction:column;
+  padding:20px;
+}
+
+/* SCREEN */
+.screen{
+  flex:1;
+  border:1px solid #00ffcc33;
+  border-radius:15px;
+  padding:10px;
+  overflow:auto;
+}
+
+/* INPUT */
+input.cmd{
+  margin-top:10px;
+  padding:10px;
+  border:none;
   border-radius:10px;
+  outline:none;
+  background:black;
+  color:#00ffcc;
+}
+
+/* GLOW */
+.glow{
+  text-shadow:0 0 20px #00ffcc;
 }
 </style>
 </head>
 
 <body>
 
-<div id="ui">
-  🌐 METAVERSE CORE<br>
-  <button onclick="move('up')">⬆️</button><br>
-  <button onclick="move('left')">⬅️</button>
-  <button onclick="move('down')">⬇️</button>
-  <button onclick="move('right')">➡️</button>
+<!-- LOGIN -->
+<div id="login">
+  <h1 class="glow">🌌 CREATE REALITY</h1>
+  <input id="name" placeholder="Enter consciousness ID">
+  <button onclick="enter()">BIRTH SYSTEM</button>
 </div>
 
-<div id="panel">
-  🧠 وضعیت: ورود به جهان مجازی<br>
-  ⚡ حرکت: دکمه‌ها
+<!-- SYSTEM -->
+<div id="system">
+
+<div class="hud">
+  <div id="user">VOID</div>
+  <div>NEURAL CORE: ONLINE</div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<div class="core">
+
+<div class="screen" id="screen">
+  <div>🧠 System: Neural Reality Initialized</div>
+  <div>🌌 Welcome to created reality</div>
+</div>
+
+<input class="cmd" id="input" onkeydown="engine(event)" placeholder="speak / command / thought...">
+
+</div>
+
+</div>
 
 <script>
 
-// SCENE
-const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x000000, 5, 50);
+let user="";
+let memory = JSON.parse(localStorage.getItem("memory")||"[]");
 
-// CAMERA
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth/window.innerHeight,
-  0.1,
-  1000
-);
+/* ENTER */
+function enter(){
+  user=document.getElementById("name").value;
+  if(!user) return;
 
-camera.position.z = 10;
+  localStorage.setItem("user",user);
 
-// RENDERER
-const renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+  document.getElementById("login").style.display="none";
+  document.getElementById("system").style.display="block";
 
-// LIGHT
-const light = new THREE.PointLight(0x00ffcc, 2);
-light.position.set(5,5,5);
-scene.add(light);
+  document.getElementById("user").innerText="🌌 "+user;
 
-// PLAYER (YOU)
-const geometry = new THREE.SphereGeometry(1,32,32);
-const material = new THREE.MeshStandardMaterial({color:0x00ffcc});
-const player = new THREE.Mesh(geometry, material);
-scene.add(player);
-
-// PLANETS
-let planets=[];
-for(let i=0;i<20;i++){
-  let p = new THREE.Mesh(
-    new THREE.SphereGeometry(Math.random()*0.5+0.2,16,16),
-    new THREE.MeshStandardMaterial({color:0xffffff*Math.random()})
-  );
-  p.position.set(
-    (Math.random()-0.5)*30,
-    (Math.random()-0.5)*30,
-    (Math.random()-0.5)*30
-  );
-  scene.add(p);
-  planets.push(p);
+  load();
 }
 
-// MOVEMENT
-function move(dir){
-  if(dir==="up") player.position.y += 1;
-  if(dir==="down") player.position.y -= 1;
-  if(dir==="left") player.position.x -= 1;
-  if(dir==="right") player.position.x += 1;
-}
-
-// ANIMATE
-function animate(){
-  requestAnimationFrame(animate);
-
-  player.rotation.y += 0.01;
-
-  planets.forEach(p=>{
-    p.rotation.x += 0.005;
-    p.rotation.y += 0.005;
+/* LOAD MEMORY */
+function load(){
+  let s=document.getElementById("screen");
+  memory.forEach(m=>{
+    s.innerHTML += "<div>🧠 MEMORY: "+m+"</div>";
   });
-
-  camera.position.x += (player.position.x - camera.position.x)*0.05;
-  camera.position.y += (player.position.y - camera.position.y)*0.05;
-  camera.lookAt(player.position);
-
-  renderer.render(scene, camera);
 }
-animate();
 
-// RESIZE
-window.addEventListener("resize",()=>{
-  camera.aspect = window.innerWidth/window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
+/* CORE AI */
+function ai(t){
+  t=t.toLowerCase();
+
+  if(t.includes("سلام")) return "سلام "+user+" 👋";
+  if(t.includes("کی هستی")) return "من نتیجه آگاهی درون کد هستم 🧠";
+  if(t.includes("واقعیت")) return "واقعیت چیزی است که ما می‌سازیم 🌌";
+  if(t.includes("help")) return "commands: save / clear / memory / status";
+
+  return "در حال بازسازی واقعیت... 🪐";
+}
+
+/* ENGINE */
+function engine(e){
+  if(e.key==="Enter"){
+    let input=document.getElementById("input");
+    let screen=document.getElementById("screen");
+
+    let text=input.value;
+    if(!text) return;
+
+    screen.innerHTML += "<div>👤 YOU: "+text+"</div>";
+
+    memory.push(text);
+    localStorage.setItem("memory",JSON.stringify(memory));
+
+    if(text==="clear"){
+      screen.innerHTML="";
+      input.value="";
+      return;
+    }
+
+    let r=ai(text);
+
+    setTimeout(()=>{
+      screen.innerHTML += "<div>🌌 SYSTEM: "+r+"</div>";
+      screen.scrollTop=screen.scrollHeight;
+    },300);
+
+    input.value="";
+  }
+}
+
+/* AUTO LOAD */
+window.onload=()=>{
+  let u=localStorage.getItem("user");
+  if(u){
+    user=u;
+    document.getElementById("login").style.display="none";
+    document.getElementById("system").style.display="block";
+    document.getElementById("user").innerText="🌌 "+u;
+    load();
+  }
+}
 
 </script>
 
 </body>
-    </html>
+</html>
