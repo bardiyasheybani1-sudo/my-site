@@ -3,33 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧬 REALITY ENGINE</title>
+<title>🧠 TRANSHUMAN SYSTEM 🧠</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 
 body{
-  background:black;
+  background:#000;
   color:#00ffcc;
   overflow:hidden;
 }
 
-/* HOLOGRAM GRID */
+/* BACKGROUND GRID */
 body::before{
   content:"";
   position:fixed;
   width:100%;
   height:100%;
   background:
-    radial-gradient(circle, rgba(0,255,204,0.08) 1px, transparent 1px);
-  background-size:30px 30px;
-  animation:move 8s linear infinite;
+    linear-gradient(rgba(0,255,204,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,204,0.05) 1px, transparent 1px);
+  background-size:40px 40px;
   z-index:-1;
-}
-
-@keyframes move{
-  from{transform:translateY(0)}
-  to{transform:translateY(-200px)}
 }
 
 /* LOGIN */
@@ -45,8 +40,8 @@ body::before{
 input{
   padding:10px;
   border:none;
-  border-radius:10px;
   outline:none;
+  border-radius:10px;
 }
 
 button{
@@ -66,7 +61,7 @@ button:hover{transform:scale(1.1)}
   height:100vh;
 }
 
-/* HUD */
+/* TOP HUD */
 .hud{
   display:flex;
   justify-content:space-between;
@@ -75,25 +70,27 @@ button:hover{transform:scale(1.1)}
   backdrop-filter:blur(10px);
 }
 
-/* WORLD */
-.world{
+/* CHAT */
+.chat{
   height:calc(100vh - 50px);
   display:flex;
   flex-direction:column;
   padding:20px;
 }
 
-/* OUTPUT */
 .box{
   flex:1;
   overflow:auto;
+  padding:10px;
   border:1px solid #00ffcc33;
   border-radius:15px;
-  padding:10px;
 }
 
-/* INPUT */
-input.msg{
+.msg{
+  margin:5px 0;
+}
+
+input.msgbox{
   margin-top:10px;
   padding:10px;
   border:none;
@@ -103,37 +100,37 @@ input.msg{
   color:#00ffcc;
 }
 
-/* GLOW */
+/* AI glow */
 .glow{
-  text-shadow:0 0 15px #00ffcc;
+  text-shadow:0 0 10px #00ffcc;
 }
 </style>
 </head>
 
 <body>
 
+<!-- LOGIN -->
 <div id="login">
-  <h1 class="glow">🧬 ENTER REALITY ENGINE</h1>
-  <input id="name" placeholder="identity">
-  <button onclick="enter()">Initialize</button>
+  <h1 class="glow">🧠 TRANSHUMAN ACCESS</h1>
+  <input id="name" placeholder="Enter identity">
+  <button onclick="enter()">Enter System</button>
 </div>
 
+<!-- MAIN -->
 <div id="main">
 
 <div class="hud">
-  <div id="user">UNKNOWN</div>
-  <div>REALITY STATUS: STABLE</div>
+  <div id="user">SYSTEM</div>
+  <div>AI CORE: ACTIVE</div>
 </div>
 
-<div class="world">
+<div class="chat">
+  <div class="box" id="box">
+    <div class="msg">AI: سلام 👋 من سیستم هوشمند تو هستم</div>
+    <div class="msg">AI: با من حرف بزن یا بنویس help</div>
+  </div>
 
-<div class="box" id="box">
-  <div>🧠 SYSTEM: Reality Engine Activated</div>
-  <div>🌌 Type commands or talk naturally</div>
-</div>
-
-<input class="msg" id="input" onkeydown="run(event)" placeholder="speak / command...">
-
+  <input class="msgbox" id="input" onkeydown="send(event)" placeholder="type message...">
 </div>
 
 </div>
@@ -142,14 +139,7 @@ input.msg{
 
 let user="";
 
-/* SAVE MEMORY */
-let memory = JSON.parse(localStorage.getItem("mem") || "[]");
-
-function saveMemory(){
-  localStorage.setItem("mem", JSON.stringify(memory));
-}
-
-/* ENTER */
+/* LOGIN */
 function enter(){
   user=document.getElementById("name").value;
   if(!user) return;
@@ -159,33 +149,24 @@ function enter(){
   document.getElementById("login").style.display="none";
   document.getElementById("main").style.display="block";
 
-  document.getElementById("user").innerText="🧬 "+user;
-
-  loadMemory();
+  document.getElementById("user").innerText="🧠 "+user;
 }
 
-/* LOAD MEMORY */
-function loadMemory(){
-  let box=document.getElementById("box");
-  memory.forEach(m=>{
-    box.innerHTML += "<div>🧠 MEM: "+m+"</div>";
-  });
-}
-
-/* AI CORE */
-function ai(text){
+/* AI BRAIN (SIMPLE) */
+function aiReply(text){
   text=text.toLowerCase();
 
   if(text.includes("سلام")) return "سلام "+user+" 👋";
-  if(text.includes("کی هستی")) return "من Reality Engine هستم 🧬";
-  if(text.includes("چی هست")) return "من مرز بین واقعیت و کد هستم 🌌";
-  if(text.includes("help")) return "commands: save / clear / memory / reality";
-
-  return "پردازش... این جمله وارد لایه واقعیت شد 🧠";
+  if(text.includes("خوبی")) return "من یک سیستم هستم، اما در حال پردازشم 🤖";
+  if(text.includes("اسم")) return "اسم من Transhuman AI است 🧠";
+  if(text.includes("help")) return "دستورات: سلام / خوبی / اسم / درباره";
+  if(text.includes("درباره")) return "من یک هوش مصنوعی داخل مرورگر هستم 🌐";
+  
+  return "متوجه نشدم... اما دارم یاد میگیرم 🧠";
 }
 
-/* RUN SYSTEM */
-function run(e){
+/* CHAT */
+function send(e){
   if(e.key==="Enter"){
     let input=document.getElementById("input");
     let box=document.getElementById("box");
@@ -193,23 +174,13 @@ function run(e){
     let text=input.value;
     if(!text) return;
 
-    box.innerHTML += "<div>👤 YOU: "+text+"</div>";
+    box.innerHTML += "<div class='msg'>You: "+text+"</div>";
 
-    memory.push(text);
-    saveMemory();
-
-    if(text==="clear"){
-      box.innerHTML="";
-      input.value="";
-      return;
-    }
-
-    let reply = ai(text);
-
+    let reply=aiReply(text);
     setTimeout(()=>{
-      box.innerHTML += "<div>🧬 AI: "+reply+"</div>";
+      box.innerHTML += "<div class='msg'>AI: "+reply+"</div>";
       box.scrollTop=box.scrollHeight;
-    },300);
+    },400);
 
     input.value="";
   }
@@ -222,8 +193,7 @@ window.onload=()=>{
     user=u;
     document.getElementById("login").style.display="none";
     document.getElementById("main").style.display="block";
-    document.getElementById("user").innerText="🧬 "+u;
-    loadMemory();
+    document.getElementById("user").innerText="🧠 "+u;
   }
 }
 
