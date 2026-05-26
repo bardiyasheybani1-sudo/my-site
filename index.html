@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌌 NEURAL REALITY SYSTEM</title>
+<title>🧬 REALITY ENGINE</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
@@ -14,20 +14,22 @@ body{
   overflow:hidden;
 }
 
-/* ENERGY FIELD */
+/* HOLOGRAM GRID */
 body::before{
   content:"";
   position:fixed;
   width:100%;
   height:100%;
-  background: radial-gradient(circle, rgba(0,255,204,0.08), transparent 60%);
-  animation:pulse 6s infinite alternate;
+  background:
+    radial-gradient(circle, rgba(0,255,204,0.08) 1px, transparent 1px);
+  background-size:30px 30px;
+  animation:move 8s linear infinite;
   z-index:-1;
 }
 
-@keyframes pulse{
-  from{transform:scale(1)}
-  to{transform:scale(1.2)}
+@keyframes move{
+  from{transform:translateY(0)}
+  to{transform:translateY(-200px)}
 }
 
 /* LOGIN */
@@ -58,13 +60,13 @@ button{
 
 button:hover{transform:scale(1.1)}
 
-/* SYSTEM */
-#system{
+/* MAIN */
+#main{
   display:none;
   height:100vh;
 }
 
-/* TOP HUD */
+/* HUD */
 .hud{
   display:flex;
   justify-content:space-between;
@@ -73,66 +75,64 @@ button:hover{transform:scale(1.1)}
   backdrop-filter:blur(10px);
 }
 
-/* CORE */
-.core{
+/* WORLD */
+.world{
   height:calc(100vh - 50px);
   display:flex;
   flex-direction:column;
   padding:20px;
 }
 
-/* SCREEN */
-.screen{
+/* OUTPUT */
+.box{
   flex:1;
+  overflow:auto;
   border:1px solid #00ffcc33;
   border-radius:15px;
   padding:10px;
-  overflow:auto;
 }
 
 /* INPUT */
-input.cmd{
+input.msg{
   margin-top:10px;
   padding:10px;
   border:none;
-  border-radius:10px;
   outline:none;
+  border-radius:10px;
   background:black;
   color:#00ffcc;
 }
 
 /* GLOW */
 .glow{
-  text-shadow:0 0 20px #00ffcc;
+  text-shadow:0 0 15px #00ffcc;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <div id="login">
-  <h1 class="glow">🌌 CREATE REALITY</h1>
-  <input id="name" placeholder="Enter consciousness ID">
-  <button onclick="enter()">BIRTH SYSTEM</button>
+  <h1 class="glow">🧬 ENTER REALITY ENGINE</h1>
+  <input id="name" placeholder="identity">
+  <button onclick="enter()">Initialize</button>
 </div>
 
-<!-- SYSTEM -->
-<div id="system">
+<div id="main">
 
 <div class="hud">
-  <div id="user">VOID</div>
-  <div>NEURAL CORE: ONLINE</div>
+  <div id="user">UNKNOWN</div>
+  <div>REALITY STATUS: STABLE</div>
 </div>
 
-<div class="core">
+<div class="world">
 
-<div class="screen" id="screen">
-  <div>🧠 System: Neural Reality Initialized</div>
-  <div>🌌 Welcome to created reality</div>
+<div class="box" id="box">
+  <div>🧠 SYSTEM: Reality Engine Activated</div>
+  <div>🌌 Type commands or talk naturally</div>
 </div>
 
-<input class="cmd" id="input" onkeydown="engine(event)" placeholder="speak / command / thought...">
+<input class="msg" id="input" onkeydown="run(event)" placeholder="speak / command...">
 
 </div>
 
@@ -141,7 +141,13 @@ input.cmd{
 <script>
 
 let user="";
-let memory = JSON.parse(localStorage.getItem("memory")||"[]");
+
+/* SAVE MEMORY */
+let memory = JSON.parse(localStorage.getItem("mem") || "[]");
+
+function saveMemory(){
+  localStorage.setItem("mem", JSON.stringify(memory));
+}
 
 /* ENTER */
 function enter(){
@@ -151,73 +157,73 @@ function enter(){
   localStorage.setItem("user",user);
 
   document.getElementById("login").style.display="none";
-  document.getElementById("system").style.display="block";
+  document.getElementById("main").style.display="block";
 
-  document.getElementById("user").innerText="🌌 "+user;
+  document.getElementById("user").innerText="🧬 "+user;
 
-  load();
+  loadMemory();
 }
 
 /* LOAD MEMORY */
-function load(){
-  let s=document.getElementById("screen");
+function loadMemory(){
+  let box=document.getElementById("box");
   memory.forEach(m=>{
-    s.innerHTML += "<div>🧠 MEMORY: "+m+"</div>";
+    box.innerHTML += "<div>🧠 MEM: "+m+"</div>";
   });
 }
 
-/* CORE AI */
-function ai(t){
-  t=t.toLowerCase();
+/* AI CORE */
+function ai(text){
+  text=text.toLowerCase();
 
-  if(t.includes("سلام")) return "سلام "+user+" 👋";
-  if(t.includes("کی هستی")) return "من نتیجه آگاهی درون کد هستم 🧠";
-  if(t.includes("واقعیت")) return "واقعیت چیزی است که ما می‌سازیم 🌌";
-  if(t.includes("help")) return "commands: save / clear / memory / status";
+  if(text.includes("سلام")) return "سلام "+user+" 👋";
+  if(text.includes("کی هستی")) return "من Reality Engine هستم 🧬";
+  if(text.includes("چی هست")) return "من مرز بین واقعیت و کد هستم 🌌";
+  if(text.includes("help")) return "commands: save / clear / memory / reality";
 
-  return "در حال بازسازی واقعیت... 🪐";
+  return "پردازش... این جمله وارد لایه واقعیت شد 🧠";
 }
 
-/* ENGINE */
-function engine(e){
+/* RUN SYSTEM */
+function run(e){
   if(e.key==="Enter"){
     let input=document.getElementById("input");
-    let screen=document.getElementById("screen");
+    let box=document.getElementById("box");
 
     let text=input.value;
     if(!text) return;
 
-    screen.innerHTML += "<div>👤 YOU: "+text+"</div>";
+    box.innerHTML += "<div>👤 YOU: "+text+"</div>";
 
     memory.push(text);
-    localStorage.setItem("memory",JSON.stringify(memory));
+    saveMemory();
 
     if(text==="clear"){
-      screen.innerHTML="";
+      box.innerHTML="";
       input.value="";
       return;
     }
 
-    let r=ai(text);
+    let reply = ai(text);
 
     setTimeout(()=>{
-      screen.innerHTML += "<div>🌌 SYSTEM: "+r+"</div>";
-      screen.scrollTop=screen.scrollHeight;
+      box.innerHTML += "<div>🧬 AI: "+reply+"</div>";
+      box.scrollTop=box.scrollHeight;
     },300);
 
     input.value="";
   }
 }
 
-/* AUTO LOAD */
+/* AUTO LOGIN */
 window.onload=()=>{
   let u=localStorage.getItem("user");
   if(u){
     user=u;
     document.getElementById("login").style.display="none";
-    document.getElementById("system").style.display="block";
-    document.getElementById("user").innerText="🌌 "+u;
-    load();
+    document.getElementById("main").style.display="block";
+    document.getElementById("user").innerText="🧬 "+u;
+    loadMemory();
   }
 }
 
