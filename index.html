@@ -3,241 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>👑 GOD OF GODS MODE 👑</title>
+<title>Bardiya Sheybani</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
-  background:black;
-  color:#00ffcc;
-  overflow:hidden;
+font-family:'Orbitron',sans-serif;
+background:#050816;
+overflow-x:hidden;
+color:white;
 }
 
-/* MATRIX BACKGROUND */
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
+/* پس زمینه متحرک */
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:url('https://i.imgur.com/YKY28eT.png');
+animation:moveStars 120s linear infinite;
+z-index:-2;
 }
 
-/* LOGIN */
-#login{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
+@keyframes moveStars{
+from{
+transform:translateY(0);
+}
+to{
+transform:translateY(-2000px);
+}
 }
 
-input{
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  outline:none;
+/* نور */
+
+.glow{
+position:fixed;
+width:500px;
+height:500px;
+background:radial-gradient(circle,#00ffff55,transparent);
+top:-100px;
+left:-100px;
+filter:blur(80px);
+z-index:-1;
+animation:moveGlow 10s infinite alternate;
 }
 
-button{
-  padding:10px 20px;
-  border:none;
-  background:#00ffcc;
-  cursor:pointer;
-  border-radius:20px;
-  transition:0.3s;
+@keyframes moveGlow{
+100%{
+transform:translate(700px,400px);
+}
 }
 
-button:hover{transform:scale(1.1)}
+/* هدر */
 
-/* DASHBOARD */
-#dash{
-  display:none;
-  height:100vh;
+header{
+padding:30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+backdrop-filter:blur(10px);
+background:#ffffff10;
+border-bottom:1px solid #ffffff20;
+position:sticky;
+top:0;
+z-index:100;
 }
 
-/* TOP BAR */
-.top{
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-  background:rgba(0,255,204,0.1);
-  backdrop-filter:blur(10px);
+.logo{
+font-size:30px;
+font-weight:bold;
+color:#00ffff;
+text-shadow:0 0 20px #00ffff;
 }
 
-/* TERMINAL */
-.terminal{
-  padding:20px;
-  height:calc(100vh - 50px);
-  overflow:auto;
-  font-size:14px;
+nav a{
+margin:0 15px;
+text-decoration:none;
+color:white;
+transition:0.3s;
 }
 
-input.cmd{
-  width:100%;
-  background:black;
-  color:#00ffcc;
-  border:none;
-  outline:none;
-  margin-top:10px;
+nav a:hover{
+color:#00ffff;
+text-shadow:0 0 15px #00ffff;
 }
 
-/* BOXES */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:10px;
-  padding:20px;
+/* بخش اصلی */
+
+.hero{
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:70px;
+color:#00ffff;
+text-shadow:0 0 25px #00ffff;
+animation:float 3s ease-in-out infinite;
+}
+
+.hero p{
+margin-top:20px;
+font-size:22px;
+color:#cccccc;
+max-width:700px;
+}
+
+@keyframes float{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-15px);
+}
+}
+
+/* دکمه */
+
+.btn{
+margin-top:40px;
+padding:18px 40px;
+border:none;
+border-radius:50px;
+font-size:20px;
+cursor:pointer;
+background:linear-gradient(45deg,#00ffff,#0066ff);
+color:white;
+box-shadow:0 0 25px #00ffff;
+transition:0.4s;
+}
+
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 40px #00ffff;
+}
+
+/* کارت ها */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+padding:60px;
 }
 
 .card{
-  background:rgba(0,255,204,0.05);
-  border:1px solid #00ffcc33;
-  padding:15px;
-  border-radius:15px;
+background:#ffffff10;
+border:1px solid #ffffff20;
+backdrop-filter:blur(12px);
+padding:30px;
+border-radius:25px;
+transition:0.4s;
 }
+
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 0 30px #00ffff55;
+}
+
+.card h2{
+color:#00ffff;
+margin-bottom:15px;
+}
+
+/* فوتر */
+
+footer{
+text-align:center;
+padding:30px;
+color:#888;
+}
+
 </style>
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
+<div class="stars"></div>
+<div class="glow"></div>
 
-<!-- LOGIN -->
-<div id="login">
-  <h1>👑 GOD OF GODS</h1>
-  <input id="name" placeholder="Enter Identity">
-  <button onclick="enter()">ENTER SYSTEM</button>
+<header>
+<div class="logo">BARDIYA</div>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Skills</a>
+<a href="#">Projects</a>
+<a href="#">Contact</a>
+</nav>
+</header>
+
+<section class="hero">
+
+<h1>WELCOME</h1>
+
+<p>
+Official futuristic website of Bardiya Sheybani
+</p>
+
+<button class="btn">ENTER THE FUTURE</button>
+
+</section>
+
+<section class="cards">
+
+<div class="card">
+<h2>⚽ Football</h2>
+<p>Barcelona • Liverpool • PSG</p>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dash">
-
-<div class="top">
-  <div id="user">SYSTEM</div>
-  <div>
-    <button onclick="logout()">EXIT</button>
-  </div>
+<div class="card">
+<h2>🎸 Music</h2>
+<p>Classical Guitar & Rock Music</p>
 </div>
 
-<div class="grid">
-  <div class="card">⚡ POWER: MAX</div>
-  <div class="card">🧠 AI CORE: ACTIVE</div>
-  <div class="card">🔥 MODE: GOD</div>
+<div class="card">
+<h2>🧠 Math</h2>
+<p>Olympiads • Kangaroo • Advanced Math</p>
 </div>
 
-<div class="terminal" id="terminal">
-> system booting...<br>
-> welcome operator<br><br>
+</section>
 
-type: help
-<br><br>
-
-<input class="cmd" id="cmd" onkeydown="run(event)">
-</div>
-
-</div>
-
-<script>
-
-/* MATRIX */
-const c = document.getElementById("matrix");
-const ctx = c.getContext("2d");
-
-c.height = window.innerHeight;
-c.width = window.innerWidth;
-
-let letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-letters = letters.split("");
-
-let fontSize = 14;
-let columns = c.width/fontSize;
-
-let drops = [];
-
-for(let x=0;x<columns;x++)
-drops[x]=1;
-
-function draw(){
-  ctx.fillStyle="rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,c.width,c.height);
-
-  ctx.fillStyle="#00ffcc";
-  ctx.font=fontSize+"px monospace";
-
-  for(let i=0;i<drops.length;i++){
-    let text = letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-
-    if(drops[i]*fontSize > c.height && Math.random()>0.975)
-      drops[i]=0;
-
-    drops[i]++;
-  }
-}
-setInterval(draw,33);
-
-/* LOGIN */
-function enter(){
-  let name=document.getElementById("name").value;
-  if(!name) return;
-
-  localStorage.setItem("user",name);
-
-  document.getElementById("login").style.display="none";
-  document.getElementById("dash").style.display="block";
-
-  document.getElementById("user").innerText="👑 "+name;
-}
-
-function logout(){
-  localStorage.removeItem("user");
-  location.reload();
-}
-
-/* TERMINAL */
-function run(e){
-  if(e.key==="Enter"){
-    let cmd=document.getElementById("cmd").value;
-    let t=document.getElementById("terminal");
-
-    let out = "";
-
-    if(cmd==="help"){
-      out="commands: help / status / clear / hack";
-    }
-    else if(cmd==="status"){
-      out="SYSTEM: ONLINE | GOD MODE ACTIVE";
-    }
-    else if(cmd==="hack"){
-      out=">>> ACCESSING MAINFRAME... DONE 😈";
-    }
-    else if(cmd==="clear"){
-      t.innerHTML="> cleared<br><input class='cmd' id='cmd' onkeydown='run(event)'>";
-      return;
-    }
-    else{
-      out="unknown command";
-    }
-
-    t.innerHTML += "<br>> "+cmd+"<br>"+out+"<br>";
-    t.scrollTop=t.scrollHeight;
-
-    document.getElementById("cmd").value="";
-  }
-}
-
-/* AUTO LOGIN */
-window.onload=()=>{
-  let u=localStorage.getItem("user");
-  if(u){
-    document.getElementById("login").style.display="none";
-    document.getElementById("dash").style.display="block";
-    document.getElementById("user").innerText="👑 "+u;
-  }
-}
-
-</script>
+<footer>
+© 2026 Bardiya Sheybani
+</footer>
 
 </body>
 </html>
