@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bardiya Sheybani</title>
+<title>Bardiya Future</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
@@ -20,9 +20,10 @@ font-family:'Orbitron',sans-serif;
 background:#050816;
 overflow-x:hidden;
 color:white;
+transition:1s;
 }
 
-/* پس زمینه متحرک */
+/* ستاره ها */
 
 .stars{
 position:fixed;
@@ -96,7 +97,7 @@ color:#00ffff;
 text-shadow:0 0 15px #00ffff;
 }
 
-/* بخش اصلی */
+/* هیرو */
 
 .hero{
 height:90vh;
@@ -179,6 +180,37 @@ color:#00ffff;
 margin-bottom:15px;
 }
 
+/* پنل مخفی */
+
+.secret{
+display:none;
+padding:60px;
+text-align:center;
+animation:fade 1s;
+}
+
+.secret h2{
+font-size:50px;
+color:#00ffff;
+margin-bottom:20px;
+}
+
+.secret p{
+font-size:22px;
+color:#ddd;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
 /* فوتر */
 
 footer{
@@ -196,6 +228,7 @@ color:#888;
 <div class="glow"></div>
 
 <header>
+
 <div class="logo">BARDIYA</div>
 
 <nav>
@@ -204,6 +237,7 @@ color:#888;
 <a href="#">Projects</a>
 <a href="#">Contact</a>
 </nav>
+
 </header>
 
 <section class="hero">
@@ -214,7 +248,9 @@ color:#888;
 Official futuristic website of Bardiya Sheybani
 </p>
 
-<button class="btn">ENTER THE FUTURE</button>
+<button class="btn" onclick="enterFuture()">
+ENTER THE FUTURE
+</button>
 
 </section>
 
@@ -237,9 +273,70 @@ Official futuristic website of Bardiya Sheybani
 
 </section>
 
+<section class="secret" id="secret">
+
+<h2>🚀 FUTURE MODE ACTIVATED 🚀</h2>
+
+<p>
+Welcome to Bardiya's futuristic universe.
+</p>
+
+<br><br>
+
+<button class="btn" onclick="playMusic()">
+🎵 PLAY MUSIC
+</button>
+
+<button class="btn" onclick="changeTheme()">
+🌌 CHANGE WORLD
+</button>
+
+</section>
+
 <footer>
 © 2026 Bardiya Sheybani
 </footer>
+
+<script>
+
+function enterFuture(){
+
+alert("🚀 ENTERING FUTURE MODE 🚀");
+
+document.body.style.background =
+"linear-gradient(135deg,#000428,#004e92)";
+
+document.getElementById("secret").style.display = "block";
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+
+}
+
+function playMusic(){
+
+let audio = new Audio(
+"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+);
+
+audio.play();
+
+alert("🎸 Music Started");
+
+}
+
+function changeTheme(){
+
+document.body.style.background =
+"linear-gradient(135deg,#20002c,#cbb4d4)";
+
+alert("🌌 New World Activated");
+
+}
+
+</script>
 
 </body>
 </html>
